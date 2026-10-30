@@ -1,0 +1,130 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@font-face {
+  font-family: 'ThmanyahSans';
+  src: url('/fonts/thmanyah_sans_regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ThmanyahSans';
+  src: url('/fonts/thmanyah_sans_bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ThmanyahSerif';
+  src: url('/fonts/thmanyah_serif_text_regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ThmanyahSerif';
+  src: url('/fonts/thmanyah_serif_text_bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ThmanyahDisplay';
+  src: url('/fonts/thmanyah_display_bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'AmiriQuran';
+  src: url('/fonts/amiri_quran.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-sans: 'ThmanyahSans', system-ui, -apple-system, sans-serif;
+  --font-serif: 'ThmanyahSerif', Georgia, serif;
+  --font-display: 'ThmanyahDisplay', Georgia, serif;
+  --font-quran: 'AmiriQuran', 'ThmanyahSerif', serif;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  direction: rtl;
+  overflow-x: hidden;
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
+}
+
+.font-sans-ar {
+  font-family: var(--font-sans);
+}
+
+.font-read {
+  font-family: var(--font-serif);
+}
+
+.font-display-ar {
+  font-family: var(--font-display);
+}
+
+.font-quran {
+  font-family: var(--font-quran);
+}
+
+.pt-safe {
+  padding-top: var(--safe-top);
+}
+
+.pb-safe {
+  padding-bottom: var(--safe-bottom);
+}
+
+.mb-safe {
+  margin-bottom: var(--safe-bottom);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom subtle scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(15, 92, 77, 0.2);
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(111, 211, 184, 0.25);
+}
