@@ -13,18 +13,19 @@ interface RichArabicTextProps {
 export const RichArabicText: React.FC<RichArabicTextProps> = ({
   src,
   scale = 1,
-  baseSize = 24,
+  baseSize = 21,
   showTashkeel = true,
   className = '',
   onFootnoteClick,
 }) => {
   const tokens = useMemo(() => parseRichMarkup(src), [src]);
   const fontSizePx = Math.round(baseSize * scale);
-  const lineHeightPx = Math.round(fontSizePx * 1.9);
+  // Generous line-height so Quranic marks and diacritics never collide
+  const lineHeightPx = Math.round(fontSizePx * 2.05);
 
   return (
     <div
-      className={`font-read text-[#1C1B17] dark:text-[#E6E2D9] select-text leading-relaxed ${className}`}
+      className={`font-read text-[#1C1B17] dark:text-[#E6E2D9] select-text break-words ${className}`}
       style={{
         fontSize: `${fontSizePx}px`,
         lineHeight: `${lineHeightPx}px`,
@@ -37,7 +38,10 @@ export const RichArabicText: React.FC<RichArabicTextProps> = ({
             <span
               key={i}
               className="font-quran text-[#0F5C4D] dark:text-[#6FD3B8]"
-              style={{ fontSize: `${Math.round(fontSizePx * 1.08)}px` }}
+              style={{
+                fontSize: `${Math.round(fontSizePx * 1.04)}px`,
+                lineHeight: `${Math.round(fontSizePx * 2.25)}px`,
+              }}
             >
               {displayContent}
             </span>
@@ -48,7 +52,7 @@ export const RichArabicText: React.FC<RichArabicTextProps> = ({
             <span
               key={i}
               className="text-[#4A4639] dark:text-[#C2C9C4] font-normal"
-              style={{ fontSize: `${Math.round(fontSizePx * 0.82)}px` }}
+              style={{ fontSize: `${Math.round(fontSizePx * 0.84)}px` }}
             >
               {displayContent}
             </span>
@@ -94,7 +98,7 @@ interface ScholarlyLongTextProps {
 export const ScholarlyLongText: React.FC<ScholarlyLongTextProps> = ({
   body,
   scale = 1,
-  baseSize = 20,
+  baseSize = 18,
   showTashkeel = true,
 }) => {
   const paragraphs = useMemo(
@@ -107,7 +111,7 @@ export const ScholarlyLongText: React.FC<ScholarlyLongTextProps> = ({
   );
 
   return (
-    <div className="space-y-3.5 select-text">
+    <div className="space-y-3 select-text">
       {paragraphs.map((line, idx) => {
         const isHeading =
           line.length < 55 && (line.endsWith(':') || line.startsWith('•') || line.startsWith('-'));
@@ -115,16 +119,12 @@ export const ScholarlyLongText: React.FC<ScholarlyLongTextProps> = ({
           return (
             <h4
               key={idx}
-              className="font-read font-bold text-[#0F5C4D] dark:text-[#6FD3B8] pt-2"
-              style={{
-                fontSize: `${Math.round(baseSize * scale * 1.05)}px`,
-                lineHeight: `${Math.round(baseSize * scale * 1.75)}px`,
-              }}
+              className="font-read font-bold text-[#0F5C4D] dark:text-[#6FD3B8] pt-1.5"
             >
               <RichArabicText
                 src={line}
                 scale={scale}
-                baseSize={baseSize}
+                baseSize={Math.round(baseSize * 1.04)}
                 showTashkeel={showTashkeel}
                 className="!text-[#0F5C4D] dark:!text-[#6FD3B8] font-bold"
               />
@@ -151,7 +151,7 @@ export const StatProgressRing: React.FC<{
   size?: number;
   strokeWidth?: number;
   label?: string;
-}> = ({ percent, size = 48, strokeWidth = 4, label }) => {
+}> = ({ percent, size = 44, strokeWidth = 3.5, label }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const clamped = Math.max(0, Math.min(100, percent));
@@ -185,7 +185,7 @@ export const StatProgressRing: React.FC<{
           className="text-[#0F5C4D] dark:text-[#6FD3B8] transition-all duration-300"
         />
       </svg>
-      <span className="absolute text-[11px] font-bold tabular-nums text-[#0F5C4D] dark:text-[#6FD3B8]">
+      <span className="absolute text-[10px] font-bold tabular-nums text-[#0F5C4D] dark:text-[#6FD3B8]">
         {label ?? `${arabicDigits(clamped)}٪`}
       </span>
     </div>

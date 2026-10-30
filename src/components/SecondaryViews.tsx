@@ -380,8 +380,8 @@ export const TasbihView: React.FC<TasbihViewProps> = ({
     [tasbihCounts]
   );
 
-  const circleSize = 252;
-  const strokeWidth = 10;
+  const circleSize = 224;
+  const strokeWidth = 9;
   const radius = (circleSize - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const dashOffset = circumference - progressFraction * circumference;
@@ -397,16 +397,16 @@ export const TasbihView: React.FC<TasbihViewProps> = ({
   };
 
   return (
-    <div className="space-y-5 sm:space-y-6 pb-28 lg:pb-12">
+    <div className="space-y-4 sm:space-y-6 pb-24 lg:pb-12">
       {/* On mobile, place the interactive counter first so it's immediately in the thumb zone */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-start">
         {/* Interactive Tactile Counter Ring (Ordered 1st on mobile, 2nd on desktop) */}
-        <div className="order-1 lg:order-2 lg:col-span-7 bg-[#F3EFE3] dark:bg-[#182120] border border-[#D0CABA] dark:border-[#3B4A46] rounded-2xl p-5 sm:p-8 flex flex-col items-center justify-center text-center space-y-5 sm:space-y-6">
+        <div className="order-1 lg:order-2 lg:col-span-7 bg-[#F3EFE3] dark:bg-[#182120] border border-[#D0CABA] dark:border-[#3B4A46] rounded-2xl p-4 sm:p-8 flex flex-col items-center justify-center text-center space-y-4 sm:space-y-6">
           <div className="space-y-1 max-w-xl">
             <span className="text-xs font-bold text-[#9A7515] dark:text-[#E7C46A]">
               الذكر الحالي
             </span>
-            <h2 className="font-read text-xl sm:text-3xl font-bold text-[#1C1B17] dark:text-[#E6E2D9] leading-relaxed">
+            <h2 className="font-read text-lg sm:text-3xl font-bold text-[#1C1B17] dark:text-[#E6E2D9] leading-relaxed">
               {activePhrase}
             </h2>
           </div>
@@ -448,24 +448,32 @@ export const TasbihView: React.FC<TasbihViewProps> = ({
               type="button"
               onClick={onTap}
               aria-label="اضغط للتسبيح"
-              className="absolute w-[212px] h-[212px] rounded-full bg-[#CFEADF] dark:bg-[#14463B] text-[#00201A] dark:text-[#B5F0DD] hover:brightness-95 active:scale-[0.97] transition-all flex flex-col items-center justify-center shadow-inner select-none cursor-pointer"
+              className="absolute w-[188px] h-[188px] rounded-full bg-[#CFEADF] dark:bg-[#14463B] text-[#00201A] dark:text-[#B5F0DD] hover:brightness-95 active:scale-[0.97] transition-all flex flex-col items-center justify-center shadow-inner select-none cursor-pointer"
             >
-              <span className="text-5xl sm:text-6xl font-display-ar font-bold tabular-nums tracking-tight">
+              <span className="text-4xl sm:text-5xl font-display-ar font-bold tabular-nums tracking-tight">
                 {arabicDigits(count)}
               </span>
-              <span className="text-xs font-bold opacity-80 mt-2 tabular-nums">
-                الجولة الحالية: {arabicDigits(inRound)} من {arabicDigits(target)}
+              <span className="text-[11px] sm:text-xs font-bold opacity-80 mt-1.5 tabular-nums">
+                الجولة: {arabicDigits(inRound)} من {arabicDigits(target)}
               </span>
-              <span className="text-xs opacity-75 mt-1">اضغط هنا للتسبيح</span>
+              <span className="text-[11px] opacity-75 mt-0.5">اضغط للتسبيح</span>
             </button>
           </div>
 
-          <div className="text-xs sm:text-sm font-bold text-[#4A4639] dark:text-[#C2C9C4] tabular-nums">
-            الدورات المكتملة ({arabicDigits(target)}): {arabicDigits(completedRounds)}
+          <div className="flex items-center justify-between w-full max-w-xs text-xs font-bold text-[#4A4639] dark:text-[#C2C9C4] tabular-nums pt-1">
+            <span>الدورات المكتملة ({arabicDigits(target)}): {arabicDigits(completedRounds)}</span>
+            <button
+              type="button"
+              onClick={onResetCurrent}
+              className="px-2.5 py-1 rounded-lg border border-[#D0CABA] dark:border-[#3B4A46] hover:bg-[#EDE8DA] dark:hover:bg-[#243230] flex items-center gap-1 cursor-pointer"
+            >
+              <RotateCcw className="w-3 h-3" />
+              <span>تصفير</span>
+            </button>
           </div>
 
-          {/* Target Round Selector & Reset */}
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
+          {/* Target Round Selector — Clean 4-column grid */}
+          <div className="grid grid-cols-4 gap-1.5 sm:gap-2 w-full max-w-sm">
             {[33, 99, 100, 1000].map((t) => {
               const active = target === t;
               return (
@@ -473,25 +481,16 @@ export const TasbihView: React.FC<TasbihViewProps> = ({
                   key={t}
                   type="button"
                   onClick={() => onSelectTarget(t)}
-                  className={`min-h-[42px] px-3.5 py-2 rounded-xl text-xs font-bold tabular-nums transition-colors cursor-pointer ${
+                  className={`h-9 px-2 rounded-xl text-xs font-bold tabular-nums transition-colors cursor-pointer ${
                     active
                       ? 'bg-[#0F5C4D] text-white dark:bg-[#6FD3B8] dark:text-[#00382E]'
                       : 'bg-[#EDE8DA] dark:bg-[#243230] text-[#4A4639] dark:text-[#C2C9C4]'
                   }`}
                 >
-                  هدف الدورة: {arabicDigits(t)}
+                  {arabicDigits(t)}
                 </button>
               );
             })}
-
-            <button
-              type="button"
-              onClick={onResetCurrent}
-              className="min-h-[42px] px-3.5 py-2 rounded-xl border border-[#D0CABA] dark:border-[#3B4A46] text-xs font-bold text-[#4A4639] dark:text-[#C2C9C4] hover:bg-[#EDE8DA] dark:hover:bg-[#243230] flex items-center gap-1.5 cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>تصفير العدّاد</span>
-            </button>
           </div>
         </div>
 

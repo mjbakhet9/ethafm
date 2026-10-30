@@ -340,10 +340,14 @@ export default function App() {
     localStorage.setItem(`${STORAGE_PREFIX}lastRead`, JSON.stringify(pos));
   };
 
+  const navigateTo = (nextRoute: ActiveRoute) => {
+    setRoute(nextRoute);
+    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+  };
+
   const handleOpenCategory = (catId: number, initialIdx?: number) => {
     handleSelectPosition(catId, initialIdx ?? 0);
-    setRoute({ view: 'category', catId, initialIdx });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigateTo({ view: 'category', catId, initialIdx });
   };
 
   // Tasbih handlers
@@ -424,7 +428,7 @@ export default function App() {
           {/* Zone 1: Single text element wordmark */}
           <button
             type="button"
-            onClick={() => setRoute({ view: 'home' })}
+            onClick={() => navigateTo({ view: 'home' })}
             className="text-lg sm:text-2xl font-display-ar font-bold text-[#0F5C4D] dark:text-[#6FD3B8] whitespace-nowrap shrink-0 cursor-pointer"
           >
             حصن المسلم
@@ -437,7 +441,7 @@ export default function App() {
           >
             <button
               type="button"
-              onClick={() => setRoute({ view: 'home' })}
+              onClick={() => navigateTo({ view: 'home' })}
               className={`py-1 transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                 route.view === 'home' || route.view === 'category'
                   ? 'text-[#0F5C4D] dark:text-[#6FD3B8] border-b-2 border-[#0F5C4D] dark:border-[#6FD3B8]'
@@ -448,7 +452,7 @@ export default function App() {
             </button>
             <button
               type="button"
-              onClick={() => setRoute({ view: 'search' })}
+              onClick={() => navigateTo({ view: 'search' })}
               className={`py-1 transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                 route.view === 'search'
                   ? 'text-[#0F5C4D] dark:text-[#6FD3B8] border-b-2 border-[#0F5C4D] dark:border-[#6FD3B8]'
@@ -459,7 +463,7 @@ export default function App() {
             </button>
             <button
               type="button"
-              onClick={() => setRoute({ view: 'favorites' })}
+              onClick={() => navigateTo({ view: 'favorites' })}
               className={`py-1 transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                 route.view === 'favorites'
                   ? 'text-[#0F5C4D] dark:text-[#6FD3B8] border-b-2 border-[#0F5C4D] dark:border-[#6FD3B8]'
@@ -470,7 +474,7 @@ export default function App() {
             </button>
             <button
               type="button"
-              onClick={() => setRoute({ view: 'tasbih' })}
+              onClick={() => navigateTo({ view: 'tasbih' })}
               className={`py-1 transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                 route.view === 'tasbih'
                   ? 'text-[#0F5C4D] dark:text-[#6FD3B8] border-b-2 border-[#0F5C4D] dark:border-[#6FD3B8]'
@@ -481,7 +485,7 @@ export default function App() {
             </button>
             <button
               type="button"
-              onClick={() => setRoute({ view: 'settings' })}
+              onClick={() => navigateTo({ view: 'settings' })}
               className={`py-1 transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                 route.view === 'settings'
                   ? 'text-[#0F5C4D] dark:text-[#6FD3B8] border-b-2 border-[#0F5C4D] dark:border-[#6FD3B8]'
@@ -540,7 +544,7 @@ export default function App() {
                 fontScale={fontScale}
                 showTashkeel={showTashkeel}
                 onOpenCategory={handleOpenCategory}
-                onOpenSearch={(q) => setRoute({ view: 'search', initialQuery: q })}
+                onOpenSearch={(q) => navigateTo({ view: 'search', initialQuery: q })}
               />
             )}
 
@@ -558,7 +562,7 @@ export default function App() {
                 onTapZekr={handleTapZekr}
                 onResetCategory={handleResetCategory}
                 onToggleFavorite={handleToggleFavorite}
-                onBack={() => setRoute({ view: 'home' })}
+                onBack={() => navigateTo({ view: 'home' })}
                 onCopyToast={showToast}
                 onSelectPosition={handleSelectPosition}
               />
@@ -570,7 +574,7 @@ export default function App() {
                 initialQuery={route.initialQuery}
                 showTashkeel={showTashkeel}
                 onSelectZekr={(catId, idx) => handleOpenCategory(catId, idx)}
-                onBack={() => setRoute({ view: 'home' })}
+                onBack={() => navigateTo({ view: 'home' })}
               />
             )}
 
@@ -582,7 +586,7 @@ export default function App() {
                 showTashkeel={showTashkeel}
                 onSelectZekr={(catId, idx) => handleOpenCategory(catId, idx)}
                 onToggleFavorite={handleToggleFavorite}
-                onExploreCategories={() => setRoute({ view: 'home' })}
+                onExploreCategories={() => navigateTo({ view: 'home' })}
               />
             )}
 
@@ -645,7 +649,7 @@ export default function App() {
             <button
               key={tab.key}
               type="button"
-              onClick={() => setRoute({ view: tab.key })}
+              onClick={() => navigateTo({ view: tab.key })}
               className={`min-h-[48px] flex flex-col items-center justify-center transition-colors cursor-pointer ${
                 isActive
                   ? 'text-[#0F5C4D] dark:text-[#6FD3B8] font-bold'

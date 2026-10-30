@@ -154,22 +154,22 @@ export const HomeView: React.FC<HomeViewProps> = ({
   }, [dailyZekr, showTashkeel]);
 
   return (
-    <div className="space-y-6 sm:space-y-8 pb-28 lg:pb-12">
+    <div className="space-y-5 sm:space-y-8 pb-24 lg:pb-12">
       {/* Section 1: Hero & Daily Werd Summary Split */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-stretch">
         {/* Right Column (7 cols): Editorial Welcome, Quick Search Trigger & 4 Primary Adhkar */}
-        <div className="lg:col-span-7 bg-[#F3EFE3] dark:bg-[#182120] border border-[#D0CABA] dark:border-[#3B4A46] rounded-2xl p-4 sm:p-7 flex flex-col justify-between gap-5">
-          <div className="space-y-2.5">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <div className="text-xs font-bold text-[#9A7515] dark:text-[#E7C46A]">
-                موسوعة الأذكار النبوية الصحيحة مع الشرح والبيان
+        <div className="lg:col-span-7 bg-[#F3EFE3] dark:bg-[#182120] border border-[#D0CABA] dark:border-[#3B4A46] rounded-2xl p-4 sm:p-7 flex flex-col justify-between gap-4 sm:gap-5">
+          <div className="space-y-2">
+            <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
+              <div className="text-[11px] sm:text-xs font-bold text-[#9A7515] dark:text-[#E7C46A]">
+                موسوعة الأذكار النبوية الصحيحة مع الشرح
               </div>
-              <div className="text-xs text-[#4A4639] dark:text-[#C2C9C4] tabular-nums whitespace-nowrap shrink-0">
+              <div className="text-[11px] sm:text-xs text-[#4A4639] dark:text-[#C2C9C4] tabular-nums whitespace-nowrap shrink-0">
                 {arabicDigits(categories.length)} بابًا · {arabicDigits(allAzkar.length)} ذكرًا
               </div>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-display-ar font-bold text-[#0F5C4D] dark:text-[#6FD3B8] leading-tight">
+            <h1 className="text-xl sm:text-3xl lg:text-4xl font-display-ar font-bold text-[#0F5C4D] dark:text-[#6FD3B8] leading-snug">
               حصن المسلم من أذكار الكتاب والسنة
             </h1>
             <p className="text-xs sm:text-base text-[#4A4639] dark:text-[#C2C9C4] leading-relaxed max-w-2xl">
@@ -181,21 +181,21 @@ export const HomeView: React.FC<HomeViewProps> = ({
           <button
             type="button"
             onClick={() => onOpenSearch()}
-            className="w-full min-h-[48px] sm:min-h-[52px] px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#FBF8F1] dark:bg-[#101514] border border-[#D0CABA] dark:border-[#3B4A46] hover:border-[#0F5C4D] dark:hover:border-[#6FD3B8] flex items-center justify-between gap-3 text-right transition-colors group cursor-pointer"
+            className="w-full min-h-[46px] sm:min-h-[52px] px-3 sm:px-4 py-2.5 rounded-xl bg-[#FBF8F1] dark:bg-[#101514] border border-[#D0CABA] dark:border-[#3B4A46] hover:border-[#0F5C4D] dark:hover:border-[#6FD3B8] flex items-center justify-between gap-2.5 text-right transition-colors group cursor-pointer"
           >
-            <div className="flex items-center gap-2.5 sm:gap-3 text-[#4A4639] dark:text-[#C2C9C4] min-w-0">
+            <div className="flex items-center gap-2 sm:gap-3 text-[#4A4639] dark:text-[#C2C9C4] min-w-0">
               <Search className="w-4 h-4 sm:w-5 sm:h-5 text-[#0F5C4D] dark:text-[#6FD3B8] shrink-0" />
               <span className="text-xs sm:text-sm truncate">
                 ابحث في متون الأذكار، الشروحات، الأحاديث، أو الفوائد…
               </span>
             </div>
             <span className="text-xs font-bold text-[#0F5C4D] dark:text-[#6FD3B8] group-hover:translate-x-[-2px] transition-transform whitespace-nowrap shrink-0">
-              بحث متقدم
+              بحث
             </span>
           </button>
 
-          {/* 4 Quick Daily Adhkar Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {/* 4 Quick Daily Adhkar Cards — 2x2 Grid on both Mobile and Desktop with unclipped titles */}
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
             {QUICK_CATS.map((q) => {
               const cat = categories.find((c) => c.id === q.catId);
               const prog = cat
@@ -207,28 +207,37 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   key={q.catId}
                   type="button"
                   onClick={() => onOpenCategory(q.catId)}
-                  className="p-3.5 sm:p-4 rounded-xl bg-[#E6EFE9] dark:bg-[#1E3A32] hover:bg-[#CFEADF] dark:hover:bg-[#14463B] border border-[#0F5C4D]/15 dark:border-[#6FD3B8]/15 text-right flex items-center justify-between gap-3 transition-colors group cursor-pointer"
+                  className="p-3 sm:p-4 rounded-xl bg-[#E6EFE9] dark:bg-[#1E3A32] hover:bg-[#CFEADF] dark:hover:bg-[#14463B] border border-[#0F5C4D]/15 dark:border-[#6FD3B8]/15 text-right flex flex-col sm:flex-row sm:items-center justify-between gap-2 transition-colors group cursor-pointer"
                 >
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2">
-                      <IconComp className="w-5 h-5 text-[#0F5C4D] dark:text-[#6FD3B8] shrink-0" />
-                      <h2 className="font-bold text-sm sm:text-base text-[#14332B] dark:text-[#CDE9DF] truncate">
-                        {q.title}
-                      </h2>
+                  <div className="w-full sm:w-auto sm:min-w-0 sm:flex-1 flex flex-col gap-1">
+                    <div className="flex items-center justify-between sm:justify-start gap-1.5">
+                      <div className="flex items-center gap-1.5 min-w-0">
+                        <IconComp className="w-4 h-4 sm:w-5 sm:h-5 text-[#0F5C4D] dark:text-[#6FD3B8] shrink-0" />
+                        <h2 className="font-bold text-[13px] sm:text-base text-[#14332B] dark:text-[#CDE9DF] leading-snug whitespace-nowrap">
+                          {q.title}
+                        </h2>
+                      </div>
                     </div>
-                    <p className="text-xs text-[#4A4639] dark:text-[#C2C9C4] mt-1 truncate">
-                      {prog.doneAzkar > 0
-                        ? `أُنجز ${arabicDigits(prog.doneAzkar)} من ${arabicDigits(prog.totalAzkar)}`
-                        : `${arabicDigits(prog.totalAzkar)} ذكرًا · ${q.subtitle}`}
-                    </p>
+                    <div className="flex items-center justify-between gap-1">
+                      <p className="text-[11px] sm:text-xs text-[#4A4639] dark:text-[#C2C9C4] tabular-nums">
+                        {prog.doneAzkar > 0
+                          ? `أُنجز ${arabicDigits(prog.doneAzkar)}/${arabicDigits(prog.totalAzkar)}`
+                          : `${arabicDigits(prog.totalAzkar)} ذكرًا`}
+                      </p>
+                      <span className="sm:hidden text-[11px] font-bold text-[#0F5C4D] dark:text-[#6FD3B8] tabular-nums">
+                        {arabicDigits(prog.percent)}٪
+                      </span>
+                    </div>
                   </div>
 
-                  <StatProgressRing
-                    percent={prog.percent}
-                    size={42}
-                    strokeWidth={3.5}
-                    label={`${arabicDigits(prog.doneAzkar)}/${arabicDigits(prog.totalAzkar)}`}
-                  />
+                  <div className="hidden sm:block shrink-0">
+                    <StatProgressRing
+                      percent={prog.percent}
+                      size={40}
+                      strokeWidth={3.5}
+                      label={`${arabicDigits(prog.doneAzkar)}/${arabicDigits(prog.totalAzkar)}`}
+                    />
+                  </div>
                 </button>
               );
             })}
